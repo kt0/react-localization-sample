@@ -1,5 +1,4 @@
 import React from "react";
-import LocaleContext from "./locale_context";
 import PropTypes from "prop-types";
 
 const translations = {
@@ -10,6 +9,8 @@ const translations = {
     sample: "این متن فارسی است."
   }
 };
+
+const LocaleContext = React.createContext("en");
 
 const ToggleLanguage = ({ onLanguageChange, language }) => {
   return (
@@ -25,12 +26,17 @@ const ToggleLanguage = ({ onLanguageChange, language }) => {
   );
 };
 
+ToggleLanguage.prototype = {
+  onLanguageChange: PropTypes.func.isRequired,
+  language: PropTypes.string.isRequired
+};
+
 const Text = ({ id }) => {
   const language = React.useContext(LocaleContext);
   return <span>{translations[language][id]}</span>;
 };
 Text.propTypes = {
-  id: PropTypes.String
+  id: PropTypes.string.isRequired
 };
 
 export default function App() {
